@@ -1,0 +1,19 @@
+﻿@model List<TodoListWebApp.Models.SPOList>
+
+@{
+    ViewBag.Title = "SPO";
+}
+
+<h2>SPO</h2>
+
+<table class="table table-bordered table-striped">
+    @foreach (var li in Model)
+    {
+        <tr>
+            <td>@li.Name</td>
+            <td>@li.user</td>
+        </tr>
+    }
+    
+</table>
+
