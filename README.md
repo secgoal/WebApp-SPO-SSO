@@ -107,35 +107,3 @@ Clean the solution, rebuild the solution, and run it.  You might want to go into
 Because I set up ADFS for Office365 for Single Sign-On and enable auto-acceleration for my SharePoint Online tenancy, when he directly access to SharePoint Online site https://jerrylab001.sharepoint.com it will not show Office 365 login page and the user can immediately log on with local domain account. 
 3.	On this site, I create a page called “SPO” which can display items under a document library https://jerrylab001.sharepoint.com/DocLib. The items are dynamically displayed based on logged in user. For example, o365 account has access to view 1 item “dc.docx” in that document library. 
 But another account ake can view 2 items. So if on a client machine which is logged in by contoso\ake, then launch the ASP.net web application, that SPO page will display two items. 
-
-## How To Recreate This Sample
-
-First, in Visual Studio 2013 create an empty solution to host the  projects.  Then, follow these steps to create each project.
-
-### Creating the TodoListWebApp Project
-
-1. In the solution, create a new ASP.Net MVC web application called TodoListWebApp with Authentication set to No Authentication.
-2. Set SSL Enabled to be True.  Note the SSL URL.
-3. In the project properties, Web properties, set the Project Url to be the SSL URL.
-4. Add the following ASP.Net OWIN middleware NuGets: Microsoft.IdentityModel.Protocol.Extensions, System.IdentityModel.Tokens.Jwt, Microsoft.Owin.Security.OpenIdConnect, Microsoft.Owin.Security.Cookies, Microsoft.Owin.Host.SystemWeb.
-5. Add the Active Directory Authentication Library NuGet (`Microsoft.IdentityModel.Clients.ActiveDirectory`).
-6. In the `App_Start` folder, create a class `Startup.Auth.cs`.  You will need to remove `.App_Start` from the namespace name.  Replace the code for the `Startup` class with the code from the same file of the sample app.  Be sure to take the whole class definition!  The definition changes from `public class Startup` to `public partial class Startup`.
-7. Right-click on the project, select Add,  select "OWIN Startup class", and name the class "Startup".  If "OWIN Startup Class" doesn't appear in the menu, instead select "Class", and in the search box enter "OWIN".  "OWIN Startup class" will appear as a selection; select it, and name the class `Startup.cs`.
-8. In `Startup.cs`, replace the code for the `Startup` class with the code from the same file of the sample app.  Again, note the definition changes from `public class Startup` to `public partial class Startup`.
-9. In the `Views` --> `Shared` folder, create a new partial view `_LoginPartial.cshtml`.  Replace the contents of the file with the contents of the file of same name from the sample.
-10. In the `Views` --> `Shared` folder, replace the contents of `_Layout.cshtml` with the contents of the file of same name from the sample.  Effectively, all this will do is add a single line, `@Html.Partial("_LoginPartial")`, that lights up the previously added `_LoginPartial` view.
-11. Create a new empty controller called `AccountController`.  Replace the implementation with the contents of the file of same name from the sample.
-12. If you want the user to be required to sign-in before they can see any page of the app, then in the `HomeController`, decorate the `HomeController` class with the `[Authorize]` attribute.  If you leave this out, the user will be able to see the home page of the app without having to sign-in first, and can click the sign-in link on that page to get signed in.
-13. In the `Models` folder add a new class called `TodoItem.cs`.  Copy the implementation of TodoItem from this sample into the class.
-14. In the `Models` folder add a new class called `UserProfile.cs`.  Copy the implementation of UserProfile from this sample into the class.
-15. In the project, create a new folder called `Utils`.  In the folder, create a new class called `NaiveSessionCache.cs`.  Copy the implementation of the class from the sample.
-16. Add a new empty MVC5 controller TodoListController to the project.  Copy the implementation of the controller from the sample.  Remember to include the [Authorize] attribute on the class definition.
-17. Add a new empty MVC5 controller UserProfileController to the project.  Copy the implementation of the controller from the sample.  Again, remember to include the [Authorize] attribute on the class definition.
-18. In `Views` --> `TodoList` create a new view, `Index.cshtml`, and copy the implementation from this sample.
-19. In `Views` --> `UserProfile` create a new view, `Index.cshtml`, and copy the implementation from this sample.
-20. In the shared `_Layout` view, make sure the Action Links for Profile and To Do List that are in the sample have been added.
-21. In `web.config`, in `<appSettings>`, create keys for `ida:ClientId`, `ida:AppKey`, `ida:AADInstance`, `ida:Tenant`, `ida:PostLogoutRedirectUri`, `ida:GraphResourceId`, and `ida:GraphUserUrl` and set the values accordingly.  For the public Azure AD, the value of `ida:AADInstance` is `https://login.microsoftonline.com/{0}` the value of `ida:GraphResourceId` is `https://graph.windows.net`, and the value of `ida:GraphUserUrl` is `https://graph.windows.net/{0}/me?api-version=2013-11-08`.
-22. In `web.config` in `<appSettings>`, create keys for `todo:TodoListResourceId` and `todo:TodoListBaseAddress` and set the values accordinly.
-23. In `web.config` add this line in the `<system.web>` section: `<sessionState timeout="525600" />`.  This increases the ASP.Net session state timeout to it's maximum value so that access tokens and refresh tokens cache in session state aren't cleared after the default timeout of 20 minutes.
-
-Finally, in the properties of the solution itself, set both projects as startup projects.
