@@ -1,0 +1,18 @@
+﻿@model List<TodoListWebApp.Models.Announcement>
+
+@{
+    ViewBag.Title = "SharePoint Online API";
+}
+
+<h2>SharePoint Online API</h2>
+
+<table class="table table-bordered table-striped">
+    @foreach (var li in Model)
+    {
+        <tr>
+            <td>@li.Title</td>
+        </tr>
+    }
+</table>
+
+

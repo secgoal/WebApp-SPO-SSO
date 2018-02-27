@@ -155,12 +155,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SPOAPIController.cs" />
     <Compile Include="Controllers\SPOController.cs" />
     <Compile Include="Controllers\TodoListController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\SPOList.cs" />
     <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -216,6 +218,7 @@
     <Content Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Views\SPO\Index.cshtml" />
+    <Content Include="Views\SPOAPI\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

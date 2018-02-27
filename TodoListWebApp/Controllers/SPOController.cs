@@ -49,7 +49,7 @@ namespace TodoListWebApp.Controllers
 
                 using (HttpClient client = new HttpClient())
                 {
-                    var request = new HttpRequestMessage(HttpMethod.Get, url);
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
                     HttpResponseMessage response = await client.SendAsync(request);
                     if (response.IsSuccessStatusCode)
